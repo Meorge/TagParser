@@ -10,6 +10,8 @@ namespace TagParser
 		public char closingCharacter = '>';
 		public char endTagCharacter = '/';
 
+		public List<TagObject> tags = new List<TagObject>();
+
 
 		public void ParseText(string text) {
 
@@ -81,14 +83,16 @@ namespace TagParser
 				
 				
 			}
-			Console.WriteLine("========");
-			Console.WriteLine($"Raw text: {textWithNoTags}");
-			Console.WriteLine("========");
+			// Console.WriteLine("========");
+			// Console.WriteLine($"Raw text: {textWithNoTags}");
+			// Console.WriteLine("========");
 
-			foreach (TagObject tag in listOfTags) {
-				tag.WriteInformation();
-				Console.WriteLine("========");
-			}
+			// foreach (TagObject tag in listOfTags) {
+			// 	tag.WriteInformation();
+			// 	Console.WriteLine("========");
+			// }
+
+			tags = listOfTags;
 
 		}
 	} 
@@ -112,6 +116,18 @@ namespace TagParser
 
 		}
 
+		public int[] ArrayOfIndices {
+			get {
+				int[] outVal = new int[(endIndex - startIndex) + 1];
+
+				for (int i = 0; i <= endIndex - startIndex; i++) {
+					outVal[i] = startIndex + i;
+				}
+				
+				return outVal;
+			}
+		}
+
 		public string Name {
 			get {
 				return contents.Split(' ')[0];
@@ -121,7 +137,6 @@ namespace TagParser
 		public List<TagProperty> Properties {
 			get {
 				if (contents.Split(' ').Length == 1) {
-					Console.WriteLine("No properties");
 					return new List<TagProperty>();
 				}
 					
